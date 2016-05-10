@@ -26,7 +26,7 @@ public class BluetoothLibrary extends AsyncTask<String, String, BluetoothSocket>
     @Override
     protected BluetoothSocket doInBackground(String... params) {
 
-        BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter()
+        BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = bluetooth.getBondedDevices();
 
         if (pairedDevices.size() > 0) {
@@ -35,7 +35,10 @@ public class BluetoothLibrary extends AsyncTask<String, String, BluetoothSocket>
                     Log.d("FOUND DEVICE --------", device.getName());
                     connectThread = new ConnectThread(device);
                     connectThread.run();
-                    return connectThread.getSocket();
+                    if(connectThread.getSocket() != null)
+                    {
+                        return connectThread.getSocket();
+                    }
                 }
             }
         }
